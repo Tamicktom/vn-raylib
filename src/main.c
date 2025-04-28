@@ -1,4 +1,8 @@
 #include "raylib.h"
+#include <stdlib.h>
+
+#define FIRST_CHAR 32
+#define LAST_CHAR 255
 #define MAX_LINES 5
 
 typedef struct
@@ -7,14 +11,31 @@ typedef struct
   int nextLine;
 } Choice;
 
+typedef enum
+{
+  SCENE_INTRO,
+  SCENE_ROOM,
+  SCENE_END
+} Scene;
+
 int main(void)
 {
   const int screenW = 800;
   const int screenH = 600;
   InitWindow(screenW, screenH, "Visual Novel Demo");
 
+  // Prepara array de glifos de 32 a 255
+  int glyphCount = LAST_CHAR - FIRST_CHAR + 1;
+  int *glyphs = malloc(glyphCount * sizeof(int));
+  for (int i = 0; i < glyphCount; i++)
+  {
+    glyphs[i] = FIRST_CHAR + i;
+  }
+
   // Carrega uma fonte TTF
-  Font font = LoadFont("assets/font.ttf");
+  Font font = LoadFontEx("assets/font.ttf", 32, glyphs, glyphCount);
+  free(glyphs); // Libera memória alocada para os glifos
+
   Texture2D bg = LoadTexture("assets/bg0.png");
 
   const char *dialogue[MAX_LINES] = {
@@ -35,6 +56,8 @@ int main(void)
   int numChoices = 2;
   bool inChoice = false;
   int selected = 0;
+
+  Scene activeScene = SCENE_INTRO;
 
   SetTargetFPS(60);
 
