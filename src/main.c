@@ -1,6 +1,12 @@
 #include "raylib.h"
 #define MAX_LINES 5
 
+typedef struct
+{
+  const char *text;
+  int nextLine;
+} Choice;
+
 int main(void)
 {
   const int screenW = 800;
@@ -17,7 +23,18 @@ int main(void)
       "Um reflexo na parede chama sua atenção.",
       "É a imagem de um personagem misterioso.",
       "O que você faz?"};
+
+  Choice choices[] = {
+      {"Investigar o reflexo", 1},
+      {"Tentar abrir a porta", 2},
+      {"Gritar por ajuda", 3},
+      {"Fugir da sala", 4},
+      {"Esperar por alguém", 0}};
+
   int currentLine = 0;
+  int numChoices = 2;
+  bool inChoice = false;
+  int selected = 0;
 
   SetTargetFPS(60);
 
@@ -28,6 +45,9 @@ int main(void)
       currentLine++;
     }
 
+    if (currentLine == 4)
+      inChoice = true;
+
     BeginDrawing();
     ClearBackground(BLACK);
 
@@ -35,9 +55,37 @@ int main(void)
     DrawTextEx(font, "Bem-vindo à Visual Novel!", (Vector2){50, 50},
                font.baseSize, 2, WHITE);
 
-    DrawRectangle(0, 400, screenW, 200, Fade(BLACK, 0.7f)); // caixa de texto
-    DrawTextEx(font, dialogue[currentLine], (Vector2){20, 420},
-               font.baseSize, 2, WHITE);
+    if (inChoice)
+    {
+      if (IsKeyPressed(KEY_DOWN))
+        selected = (selected + 1) % numChoices;
+      if (IsKeyPressed(KEY_UP))
+        selected = (selected - 1 + numChoices) % numChoices;
+      if (IsKeyPressed(KEY_ENTER))
+      {
+        currentLine = choices[selected].nextLine;
+        inChoice = false;
+      }
+
+      for (int i = 0; i < numChoices; i++)
+      {
+        Color col = (i == selected) ? YELLOW : WHITE;
+        DrawTextEx(font, choices[i].text,
+                   (Vector2){50, 450 + i * 30},
+                   font.baseSize, 2, col);
+      }
+    }
+    else
+    {
+      DrawRectangle(0, 400, screenW, 200, Fade(BLACK, 0.7f)); // caixa de texto
+      DrawTextEx(
+          font,
+          dialogue[currentLine],
+          (Vector2){20, 420},
+          font.baseSize,
+          2,
+          WHITE);
+    }
 
     EndDrawing();
   }
