@@ -162,7 +162,15 @@ int main(void)
 
     BeginDrawing();
     ClearBackground(BLACK);
+
+    // draw background
     DrawTexture(bg, 0, 0, WHITE);
+
+    // draw dialogue box
+    DrawRectangle(0, 400, screenW, screenH - 400, (Color){0, 0, 0, 200});
+    DrawRectangleLines(0, 400, screenW, screenH - 400, WHITE);
+
+    // draw text
     DrawTextEx(font, cur->text, (Vector2){20, 420},
                font.baseSize, 2, WHITE);
 
