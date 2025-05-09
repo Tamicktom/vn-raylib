@@ -1,0 +1,93 @@
+{
+  "start_node": "n1",
+  "nodes": [
+    {
+      "id": "n1",
+      "text": "Olá! Como posso ajudar você hoje?",
+      "options": [
+        {
+          "text": "Quero saber meu saldo",
+          "next": "n2"
+        },
+        {
+          "text": "Preciso de suporte técnico",
+          "next": "n3"
+        },
+        {
+          "text": "Nada, obrigado",
+          "next": "n4"
+        }
+      ]
+    },
+    {
+      "id": "n2",
+      "text": "Seu saldo atual é R$ 1.234,56. Deseja fazer outra consulta?",
+      "options": [
+        {
+          "text": "Sim, voltar ao menu",
+          "next": "n1"
+        },
+        {
+          "text": "Não, encerrar",
+          "next": "n4"
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "text": "Claro, qual é o problema que você está enfrentando?",
+      "options": [
+        {
+          "text": "Não consigo logar",
+          "next": "n5"
+        },
+        {
+          "text": "Erro ao fazer pagamento",
+          "next": "n6"
+        },
+        {
+          "text": "Voltar ao menu",
+          "next": "n1"
+        }
+      ]
+    },
+    {
+      "id": "n5",
+      "text": "Verifique se seu usuário e senha estão corretos. Precisa de mais ajuda?",
+      "options": [
+        {
+          "text": "Sim, falar com atendente",
+          "next": "n7"
+        },
+        {
+          "text": "Não, obrigado",
+          "next": "n4"
+        }
+      ]
+    },
+    {
+      "id": "n6",
+      "text": "Estamos aptos a ajudar. Por favor, tente novamente e verifique se há saldo suficiente. Deseja voltar ao menu?",
+      "options": [
+        {
+          "text": "Voltar ao menu",
+          "next": "n1"
+        },
+        {
+          "text": "Encerrar",
+          "next": "n4"
+        }
+      ]
+    },
+    {
+      "id": "n7",
+      "text": "Conectando você a um atendente… Obrigado pela paciência!",
+      "options": []
+    },
+    {
+      "id": "n4",
+      "text": "Ok, até a próxima!",
+      "options": []
+    }
+  ]
+}
